@@ -217,7 +217,7 @@ function initializeCardEffects() {
     });
 }
 
-// 添加背景装饰元素
+// ���加背景装饰元素
 function createBackgroundDecorations() {
     const decorations = document.createElement('div');
     decorations.className = 'background-decorations';
@@ -550,43 +550,3 @@ function createFloatingHearts() {
         });
     }, 5000); // 5秒后开始消失
 }
-
-// 添加蜡烛点燃逻辑
-document.getElementById('lightCandleButton').addEventListener('click', () => {
-    const flame = document.querySelector('.flame');
-    flame.classList.remove('hidden');
-    
-    // 模拟打火机点燃动画
-    setTimeout(() => {
-        // 显示愿望输入部分
-        document.getElementById('wish-section').classList.remove('hidden');
-    }, 30000); // 30秒后显示愿望输入
-});
-
-// 添加愿望提交逻辑
-document.getElementById('submitWishButton').addEventListener('click', () => {
-    const wish = document.getElementById('wishInput').value;
-    if (wish) {
-        // 发送愿望到 Zapier
-        fetch('https://hooks.zapier.com/hooks/catch/20700994/250qpnh/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ wish: wish })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('愿望已保存！');
-            } else {
-                alert('愿望保存失败，请稍后重试。');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('愿望保存失败，请稍后重试。');
-        });
-    } else {
-        alert('请输入愿望！');
-    }
-});
