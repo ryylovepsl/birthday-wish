@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐，蒲诗玲</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 添加音频元素 -->
+    <audio id="bgMusic" loop>
+        <source src="assets/welcome-music.mp3" type="audio/mp3">
+    </audio>
+    <audio id="secondMusic" loop>
+        <source src="assets/content-music.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- 添加音乐控制按钮 -->
+    <div id="musicControl" class="music-control">
+        <div class="music-panel">            <div class="music-controls">
+                <button id="musicToggle" class="music-btn">
+                    <span class="music-icon">▶️</span>
+                </button>
+                <div class="volume-control">
+                    <button id="muteToggle" class="mute-btn">
+                        <span class="volume-icon">🔊</span>
+                    </button>
+                    <input type="range" id="volumeSlider" class="volume-slider" 
+                        min="0" max="1" step="0.1" value="0.5">
+                </div>
+            </div>
+            <div class="music-info">
+                <span id="currentSong">当前播放：欢迎音乐</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 欢迎界面 -->
+    <div id="welcome-screen" class="animate__animated">
+        <h1 class="typewriter-text"></h1>
+        <button class="animate__animated animate__pulse animate__infinite hidden" id="enterButton">
+            点击进入
+        </button>
+        
+        <!-- 添加点击提示和制作信息 -->
+        <div class="click-hint">点击屏幕发现惊喜</div>
+        
+        <!-- 修改制作信息部分 -->
+        <div class="creator-info hidden">
+            <span class="creator-text">此界面由冉岩岩制作</span>
+            <span id="secretHeart" class="secret-heart">❤️</span>
+        </div>
+    </div>
+
+    <!-- 内容界面 -->
+    <div id="content-screen" class="hidden">
+        <div class="section animate__animated animate__fadeInUp">
+            <h2>亲爱的蒲诗玲：</h2>
+            <div class="love-message typing-message"></div>
+        </div>
+        <div class="section card-section">
+            <h2>我们在一起已经：</h2>
+            <p id="days-together" class="days-count"></p>
+        </div>
+        <div class="section card-section">
+            <h2>我们在一起的日子：</h2>
+            <p class="special-date">2024年7月19日</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
