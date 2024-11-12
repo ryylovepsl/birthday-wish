@@ -217,7 +217,7 @@ function initializeCardEffects() {
     });
 }
 
-// ���加背景装饰元素
+// 加背景装饰元素
 function createBackgroundDecorations() {
     const decorations = document.createElement('div');
     decorations.className = 'background-decorations';
@@ -247,9 +247,37 @@ function createBackgroundDecorations() {
     document.body.appendChild(decorations);
 }
 
+// 添加设备方向监听
+function handleDeviceOrientation(event) {
+    const stars = document.querySelectorAll('.star');
+    const balloons = document.querySelectorAll('.balloon');
+    
+    // 获取设备的倾斜度
+    const tiltX = event.gamma; // 左右倾斜
+    const tiltY = event.beta;  // 前后倾斜
+    
+    // 调整星星和气球的位置
+    stars.forEach(star => {
+        const offsetX = (tiltX / 90) * 10; // 根据倾斜度计算偏移量
+        const offsetY = (tiltY / 90) * 10;
+        star.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    });
+    
+    balloons.forEach(balloon => {
+        const offsetX = (tiltX / 90) * 15;
+        const offsetY = (tiltY / 90) * 15;
+        balloon.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    });
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
+    
+    // 添加设备方向事件监听
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
     
     // 添加音乐控制事件监听
     musicToggle.addEventListener('click', toggleMusic);
