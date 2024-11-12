@@ -680,12 +680,42 @@ body {
     }
     
     .volume-control {
-        display: none; /* 在移动端隐藏音量控制 */
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
     }
     
-    .music-btn {
-        width: 36px;
-        height: 36px;
+    .volume-slider {
+        width: 60px;
+        transform: rotate(-90deg);
+        margin: 20px 0;
+    }
+    
+    .music-btn, .mute-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .music-info {
+        font-size: 0.7rem;
+        margin-top: 5px;
+    }
+}
+
+/* 添加更小屏幕的优化 */
+@media (max-width: 360px) {
+    .music-panel {
+        padding: 8px;
+    }
+    
+    .volume-slider {
+        width: 50px;
+    }
+    
+    .music-btn, .mute-btn {
+        width: 28px;
+        height: 28px;
     }
 }
 
