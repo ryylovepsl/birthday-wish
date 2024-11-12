@@ -521,6 +521,7 @@ body {
     position: absolute;
     opacity: 0.6;
     animation: float 20s linear infinite;
+    will-change: transform;
 }
 
 .star {
