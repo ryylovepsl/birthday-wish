@@ -7,6 +7,37 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* 其他样式保持不变，只添加需要的 */
+
+.hidden {
+    display: none;
+}
+
+/* 添加渐变文字效果 */
+.gradient-text {
+    background: linear-gradient(
+        45deg,
+        #ff69b4,
+        #ff1493,
+        #ff69b4,
+        #ff8da1,
+        #ffa07a,
+        #ff69b4
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: gradient 3s linear infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 其他原有样式 */
 
 body {
     min-height: 100vh;
@@ -62,55 +93,54 @@ body {
 /* 内容页面样式 */
 #content-screen {
     min-height: 100vh;
-    padding: 60px 20px;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    padding: clamp(20px, 5vh, 60px) clamp(15px, 5vw, 40px);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
                 url('assets/content-bg.jpg') center/cover fixed;
 }
 
 .section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    max-width: min(90%, 800px);
+    margin: clamp(20px, 4vh, 40px) auto;
+    padding: clamp(20px, 4vw, 30px);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
-    backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .section h2 {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    margin-bottom: 1rem;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #ff1493;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
 }
 
 .love-message {
-    font-size: clamp(1rem, 2vw, 1.2rem);
     line-height: 2;
-    padding: 30px;
-    background: rgba(255, 105, 180, 0.15);
-    border-radius: 15px;
-    margin-top: 20px;
+    color: #333;
     text-align: justify;
-    letter-spacing: 1px;
+    padding: 30px;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
 }
 
 .love-message p {
-    margin-bottom: 20px;
     text-indent: 2em;
-}
-
-.love-message p:last-child {
-    margin-bottom: 0;
+    margin-bottom: 2em;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
 .love-message .signature {
-    text-align: right;
-    font-style: italic;
-    color: #ff69b4;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    margin-top: 30px;
     text-indent: 0;
+    text-align: right;
+    color: #ff69b4;
+    font-style: italic;
+    margin-top: 3rem;
+    font-size: 1.1em;
+    font-weight: 500;
 }
 
 /* 音乐控制按钮样式优化 */
@@ -207,12 +237,16 @@ body {
 /* 响应式设计 */
 @media (max-width: 768px) {
     .section {
-        margin: 20px auto;
+        margin: 15px auto;
         padding: 20px;
     }
     
     .love-message {
-        padding: 15px;
+        padding: 20px;
+    }
+    
+    .days-count, .special-date {
+        font-size: 1.2rem;
     }
 }
 
@@ -222,8 +256,16 @@ body {
     }
     
     .section {
-        margin: 15px auto;
+        margin: 10px auto;
         padding: 15px;
+    }
+    
+    .love-message {
+        padding: 15px;
+    }
+    
+    .love-message p {
+        margin-bottom: 1.5em;
     }
 }
 
@@ -808,7 +850,7 @@ body {
     }
 }
 
-/* 优化触摸设备的交互 */
+/* 优化触摸备的交互 */
 @media (hover: none) {
     .card-section:hover {
         transform: none;
@@ -826,5 +868,276 @@ body {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* 信封容器 */
+.envelope-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem auto;
+    perspective: 1000px;
+    min-height: 600px;
+}
+
+/* 信封样式 */
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transform-style: preserve-3d;
+    transition: all 0.8s ease;
+    overflow: hidden;
+}
+
+/* 信封翻盖 */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
+    border-radius: 15px 15px 0 0;
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 信封内容 */
+.envelope-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    clip-path: polygon(0 50%, 50% 100%, 100% 50%, 100% 100%, 0 100%);
+}
+
+/* 打开按钮 */
+.open-envelope-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px 30px;
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.open-envelope-btn:hover {
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+}
+
+/* 信纸样式 */
+.letter {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 85%;
+    height: 400px;
+    background: linear-gradient(to bottom, #fff9fb, #fff);
+    padding: 30px;
+    border-radius: 15px;
+    transform: translate(-50%, -120%);
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 105, 180, 0.6) rgba(255, 255, 255, 0.1);
+}
+
+.letter::-webkit-scrollbar {
+    width: 6px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: rgba(255, 105, 180, 0.6);
+    border-radius: 3px;
+}
+
+.letter::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 105, 180, 0.8);
+}
+
+.letter h2 {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    color: #ff1493;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
+    padding: 10px 0;
+    background: transparent;
+}
+
+.letter .love-message {
+    padding: 0 10px;
+    color: #666;
+    line-height: 1.8;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .letter {
+        width: 90%;
+        height: 300px;
+        padding: 20px;
+    }
+    
+    .letter h2 {
+        font-size: 1.3rem;
+        padding: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .letter {
+        width: 92%;
+        height: 250px;
+        padding: 15px;
+    }
+    
+    .letter h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* 打开状态的样式 */
+.envelope.opened {
+    transform: translateY(20px);
+}
+
+.envelope.opened .envelope-flap {
+    transform: rotateX(180deg);
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+}
+
+.envelope.opened + .letter {
+    transform: translate(-50%, 60px);
+    opacity: 1;
+}
+
+/* 添加装饰元素 */
+.envelope::before, .envelope::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff69b4;
+    border-radius: 50%;
+    top: 20px;
+}
+
+.envelope::before {
+    left: 20px;
+}
+
+.envelope::after {
+    right: 20px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .envelope {
+        height: 300px;
+    }
+    
+    .letter {
+        padding: 25px;
+    }
+    
+    .letter h2 {
+        font-size: 1.5rem;
+    }
+    
+    .open-envelope-btn {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .envelope {
+        height: 250px;
+    }
+    
+    .letter {
+        padding: 20px;
+        width: 90%;
+    }
+}
+
+/* 添加渐入动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 确保在不同设备上的可读性 */
+@media (min-width: 1200px) {
+    .section {
+        max-width: 800px;
+    }
+    
+    .love-message {
+        font-size: 1.2rem;
+    }
+}
+
+/* 调整后续卡片的位置 */
+.card-section {
+    margin-top: 300px;
+    position: relative;
+    z-index: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .envelope-container {
+        min-height: 500px;
+    }
+    
+    .card-section {
+        margin-top: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .envelope-container {
+        min-height: 400px;
+    }
+    
+    .card-section {
+        margin-top: 200px;
     }
 }
