@@ -1141,3 +1141,115 @@ body {
         margin-top: 200px;
     }
 }
+
+/* 修改信封和信纸的响应式样式 */
+/* 电脑端样式 */
+@media screen and (min-width: 769px) {
+    .envelope-container {
+        min-height: 600px;
+    }
+
+    .envelope {
+        height: 400px;
+    }
+
+    .letter {
+        height: 400px;
+        width: 85%;
+        padding: 30px;
+    }
+
+    .envelope.opened + .letter {
+        transform: translate(-50%, 60px);
+    }
+
+    .card-section {
+        margin-top: 300px;
+    }
+}
+
+/* 平板端样式 */
+@media screen and (max-width: 768px) {
+    .envelope-container {
+        min-height: 500px;
+    }
+
+    .envelope {
+        height: 350px;
+    }
+
+    .letter {
+        height: 350px;
+        width: 90%;
+        padding: 25px;
+    }
+
+    .envelope.opened + .letter {
+        transform: translate(-50%, 50px);
+    }
+
+    .card-section {
+        margin-top: 250px;
+    }
+}
+
+/* 手机端样式 */
+@media screen and (max-width: 480px) {
+    .envelope-container {
+        min-height: 400px;
+        margin: 1rem auto;
+    }
+
+    .envelope {
+        height: 300px;
+    }
+
+    .letter {
+        height: 300px;
+        width: 92%;
+        padding: 20px;
+    }
+
+    .letter h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .love-message {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .envelope.opened + .letter {
+        transform: translate(-50%, 40px);
+    }
+
+    .card-section {
+        margin-top: 200px;
+    }
+
+    .open-envelope-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* 超小屏幕设备 */
+@media screen and (max-width: 360px) {
+    .envelope {
+        height: 250px;
+    }
+
+    .letter {
+        height: 250px;
+        padding: 15px;
+    }
+
+    .envelope.opened + .letter {
+        transform: translate(-50%, 30px);
+    }
+
+    .card-section {
+        margin-top: 150px;
+    }
+}
