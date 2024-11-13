@@ -148,9 +148,7 @@ function typeWriter(element, text, speed = 100) {
             i++;
             setTimeout(type, speed);
         } else {
-            // 文字打完后显示按钮
-            document.getElementById('enterButton').classList.remove('hidden');
-            // 移除打字光标
+            // 只添加打字完成的类，不显示按钮
             element.classList.add('typing-done');
         }
     }
@@ -304,8 +302,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const typewriterElement = document.querySelector('.typewriter-text');
     typeWriter(typewriterElement, welcomeText, 150);
     
-    // 修改进入按钮的点击事件，同时支持触摸
+    // 确保按钮初始隐藏
     const enterButton = document.getElementById('enterButton');
+    enterButton.classList.add('hidden');
+    
+    // 添加按钮的点击事件监听器
     enterButton.addEventListener('click', enterPage);
     enterButton.addEventListener('touchend', (e) => {
         e.preventDefault();
@@ -371,6 +372,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 添加标题动画类
     const title = document.querySelector('.typewriter-text');
     title.classList.add('welcome-title');
+
+    const openEnvelopeBtn = document.querySelector('.open-envelope-btn');
+    const envelope = document.querySelector('.envelope');
+    const letter = document.querySelector('.letter');
+
+    openEnvelopeBtn.addEventListener('click', () => {
+        envelope.classList.add('opened');
+        openEnvelopeBtn.style.display = 'none';
+        
+        // 开始打字效果
+        setTimeout(() => {
+        }, 1000);
+    });
 });
 
 // 修改 enterPage 函数，确保在移动端也能正常工作
@@ -438,6 +452,72 @@ function calculateDaysTogether() {
         <div class="time-text">${hours}:${minutes}:${seconds}</div>
     `;
 }
+// Your previous code (unchanged parts omitted)
+
+// 修改 enterPage 函数，确保在移动端也能正常工作
+function enterPage() {
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const contentScreen = document.getElementById('content-screen');
+    
+    // 添加淡出动画
+    welcomeScreen.classList.add('animate__fadeOut');
+    
+    setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+        contentScreen.classList.remove('hidden');
+        contentScreen.classList.add('page-transition');
+        
+        // 开始所有动画效果，移除 typeLoveMessage
+        startTimeUpdate();
+        handleScroll();
+        typeLoveMessage();
+        initializeCardEffects();
+        
+        // 切换音乐
+        switchMusic(secondMusic);
+        
+        if (!musicPlaying) {
+            currentMusic.play().catch(error => {
+                console.log("自动播放被阻止：", error);
+            });
+            musicPlaying = true;
+            musicToggle.classList.add('playing');
+        }
+        
+        // 显示蜡烛部分
+        document.getElementById('candle-section').classList.remove('hidden');
+        
+        // 滚动到顶部
+        window.scrollTo(0, 0);
+    }, 1000);
+}
+// 修改点击次数逻辑
+function handleInteraction(x, y) {
+    createHeartBurst(x, y);
+    clickCount++;
+
+    // 如果音乐没有播放，开始播放
+    if (!musicPlaying) {
+        currentMusic.play().catch(error => {
+            console.log("自动播放被阻止：", error);
+        });
+        musicPlaying = true;
+        musicToggle.querySelector('.music-icon').textContent = '⏸️';
+        musicToggle.classList.add('playing');
+    }
+
+    // 当点击9次时显示彩蛋并显示“点击进入”按钮
+    if (clickCount === 9) {
+        creatorInfo.classList.remove('hidden');
+        creatorInfo.classList.add('show');
+        secretHeart.classList.add('shake');
+
+        // 显示“点击进入”按钮
+        document.getElementById('enterButton').classList.remove('hidden');
+    }
+}
+
+// Other functions remain unchanged
 
 // 添加定时器，每秒更新一次
 function startTimeUpdate() {
@@ -578,3 +658,41 @@ function createFloatingHearts() {
         });
     }, 5000); // 5秒后开始消失
 }
+function handleInteraction(x, y) {
+    createHeartBurst(x, y);
+    clickCount++;
+    
+    // 如果音乐没有播放，开始播放
+    if (!musicPlaying) {
+        currentMusic.play().catch(error => {
+            console.log("自动播放被阻止：", error);
+        });
+        musicPlaying = true;
+        musicToggle.querySelector('.music-icon').textContent = '⏸️';
+        musicToggle.classList.add('playing');
+    }
+    
+    // 当点击9次时显示彩蛋和按钮
+    if (clickCount === 9) {
+        creatorInfo.classList.remove('hidden');
+        creatorInfo.classList.add('show');
+        secretHeart.classList.add('shake');
+        document.getElementById('enterButton').classList.remove('hidden'); // 显示进入按钮
+        document.querySelector('.click-hint').classList.add('hidden'); // 隐藏点击提示
+    }
+}
+
+// 修改彩蛋爱心的点击事件处理
+secretHeart.addEventListener('click', (e) => {
+    e.stopPropagation();
+    createFloatingHearts();
+    document.getElementById('enterButton').classList.remove('hidden'); // 点击爱心后显示按钮
+});
+
+secretHeart.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    createFloatingHearts();
+    document.getElementById('enterButton').classList.remove('hidden'); // 点击爱心后显示按钮
+});
+
